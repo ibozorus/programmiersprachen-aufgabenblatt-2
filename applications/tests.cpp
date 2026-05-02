@@ -327,7 +327,75 @@ TEST_CASE("Mat2 operator* Nullmatrix ergibt Nullmatrix") {
     CHECK(result.e_01 == doctest::Approx(0.0));
     CHECK(result.e_11 == doctest::Approx(0.0));
 }
+// ── operator*(Mat2, Vec2) ──────────────────────────────────
+TEST_CASE("Mat2 * Vec2 mit Einheitsmatrix aendert Vektor nicht") {
+  buw::Mat2 identity{};
+  buw::Vec2 v{3.0f, 4.0f};
+  buw::Vec2 result = identity * v;
+  CHECK(result.x == doctest::Approx(3.0f));
+  CHECK(result.y == doctest::Approx(4.0f));
+}
 
+TEST_CASE("Mat2 * Vec2 multipliziert korrekt") {
+  buw::Mat2 m{2.0, 0.0, 0.0, 3.0};
+  buw::Vec2 v{1.0f, 1.0f};
+  buw::Vec2 result = m * v;
+  CHECK(result.x == doctest::Approx(2.0f));
+  CHECK(result.y == doctest::Approx(3.0f));
+}
+
+TEST_CASE("Mat2 * Vec2 mit Nullvektor ergibt Nullvektor") {
+  buw::Mat2 m{1.0, 2.0, 3.0, 4.0};
+  buw::Vec2 v{0.0f, 0.0f};
+  buw::Vec2 result = m * v;
+  CHECK(result.x == doctest::Approx(0.0f));
+  CHECK(result.y == doctest::Approx(0.0f));
+}
+
+TEST_CASE("Mat2 * Vec2 veraendert Operanden nicht") {
+  buw::Mat2 m{2.0, 0.0, 0.0, 3.0};
+  buw::Vec2 v{1.0f, 1.0f};
+  m * v;
+  CHECK(v.x == doctest::Approx(1.0f));
+  CHECK(v.y == doctest::Approx(1.0f));
+  CHECK(m.e_00 == doctest::Approx(2.0));
+  CHECK(m.e_10 == doctest::Approx(0.0));
+  CHECK(m.e_01 == doctest::Approx(0.0));
+  CHECK(m.e_11 == doctest::Approx(3.0));
+}
+
+// ── make_rotation_mat2 ────────────────────────────────────
+TEST_CASE("make_rotation_mat2 mit phi=0 ergibt Einheitsmatrix") {
+  buw::Mat2 m = buw::make_rotation_mat2(0.0);
+  CHECK(m.e_00 == doctest::Approx(1.0));
+  CHECK(m.e_10 == doctest::Approx(0.0));
+  CHECK(m.e_01 == doctest::Approx(0.0));
+  CHECK(m.e_11 == doctest::Approx(1.0));
+}
+
+TEST_CASE("make_rotation_mat2 mit phi=pi/2 rotiert 90 Grad") {
+  buw::Mat2 m = buw::make_rotation_mat2(std::numbers::pi / 2.0);
+  buw::Vec2 v{1.0f, 0.0f};
+  buw::Vec2 result = m * v;
+  CHECK(result.x == doctest::Approx(0.0f).epsilon(1e-6));
+  CHECK(result.y == doctest::Approx(1.0f));
+}
+
+TEST_CASE("make_rotation_mat2 mit phi=pi rotiert 180 Grad") {
+  buw::Mat2 m = buw::make_rotation_mat2(std::numbers::pi);
+  buw::Vec2 v{1.0f, 0.0f};
+  buw::Vec2 result = m * v;
+  CHECK(result.x == doctest::Approx(-1.0f));
+  CHECK(result.y == doctest::Approx(0.0f).epsilon(1e-6));
+}
+
+TEST_CASE("make_rotation_mat2 mit phi=2*pi ist wieder Einheitsmatrix") {
+  buw::Mat2 m = buw::make_rotation_mat2(2.0 * std::numbers::pi);
+  buw::Vec2 v{3.0f, 4.0f};
+  buw::Vec2 result = m * v;
+  CHECK(result.x == doctest::Approx(3.0f).epsilon(1e-5));
+  CHECK(result.y == doctest::Approx(4.0f).epsilon(1e-5));
+}
 int main(int argc, char *argv[]) {
     doctest::Context ctx;
     ctx.applyCommandLine(argc, argv);

@@ -20,6 +20,10 @@ namespace buw {
 
     Mat2 operator*(Mat2 const &m1, Mat2 const &m2);
 
+    Vec2 operator*(Mat2 const& m, Vec2 const& v);
+
+    Mat2 make_rotation_mat2(double phi);
+
     //write your Mat2 DTO definition and free function declarations for A2.5 and A2.6 here (within the buw namespaces}
 }
 
