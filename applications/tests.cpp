@@ -1,5 +1,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #include <doctest.h>
+
+#include "mat2.hpp"
 #include "vec2.hpp"
 
 int factorial(int n) {
@@ -17,6 +19,7 @@ TEST_CASE("factorial computes n!") {
     CHECK(factorial(10) == 3628800);
 }
 
+// Vec2
 TEST_CASE("Vec2 default initialization") {
     buw::Vec2 a;
     CHECK(0.0f == a.x);
@@ -266,6 +269,63 @@ TEST_CASE("Vec2 operator/ veraendert Operand nicht") {
     v / 3.0;
     CHECK(v.x == doctest::Approx(6.0f));
     CHECK(v.y == doctest::Approx(9.0f));
+}
+
+// Mat2
+// ── operator*= ────────────────────────────────────────────
+TEST_CASE("Mat2 operator*= mit Einheitsmatrix aendert nichts") {
+    buw::Mat2 m{3.0, 5.1, 4.0, -1.4};
+    buw::Mat2 identity{};
+    m *= identity;
+    CHECK(m.e_00 == doctest::Approx(3.0));
+    CHECK(m.e_10 == doctest::Approx(5.1));
+    CHECK(m.e_01 == doctest::Approx(4.0));
+    CHECK(m.e_11 == doctest::Approx(-1.4));
+}
+
+TEST_CASE("Mat2 operator*= multipliziert korrekt") {
+    buw::Mat2 a{2.0, 1.0, 0.0, 3.0};
+    buw::Mat2 b{1.0, 2.0, 3.0, 4.0};
+    a *= b;
+    CHECK(a.e_00 == doctest::Approx(5));
+    CHECK(a.e_10 == doctest::Approx(8));
+    CHECK(a.e_01 == doctest::Approx(9));
+    CHECK(a.e_11 == doctest::Approx(12));
+}
+
+// ── operator* ─────────────────────────────────────────────
+TEST_CASE("Mat2 operator* mit Einheitsmatrix aendert nichts") {
+    buw::Mat2 m{2.0, 3.0, 4.0, 5.0};
+    buw::Mat2 identity{};
+    buw::Mat2 result = m * identity;
+    CHECK(result.e_00 == doctest::Approx(m.e_00));
+    CHECK(result.e_10 == doctest::Approx(m.e_10));
+    CHECK(result.e_01 == doctest::Approx(m.e_01));
+    CHECK(result.e_11 == doctest::Approx(m.e_11));
+}
+
+TEST_CASE("Mat2 operator* veraendert Operanden nicht") {
+    buw::Mat2 a{2.0, 5.0, 0.0, 3.0};
+    buw::Mat2 b{7.0, 2.0, 3.0, 4.0};
+    a * b;
+    CHECK(a.e_00 == doctest::Approx(2.0));
+    CHECK(b.e_00 == doctest::Approx(7.0));
+    CHECK(a.e_10 == doctest::Approx(5.0));
+    CHECK(b.e_10 == doctest::Approx(2.0));
+    CHECK(a.e_01 == doctest::Approx(0.0));
+    CHECK(b.e_01 == doctest::Approx(3.0));
+    CHECK(a.e_11 == doctest::Approx(3.0));
+    CHECK(b.e_11 == doctest::Approx(4.0));
+}
+
+TEST_CASE("Mat2 operator* Nullmatrix ergibt Nullmatrix") {
+    buw::Mat2 m{1.0, 2.0, 3.0, 4.0};
+    buw::Mat2 zero{0.0, 0.0, 0.0, 0.0};
+    buw::Mat2 result = m * zero;
+    CHECK(result.e_00 == doctest::Approx(0.0));
+    CHECK(result.e_10 == doctest::Approx(0.0));
+    CHECK(result.e_01 == doctest::Approx(0.0));
+    CHECK(result.e_11 == doctest::Approx(0.0));
 }
 
 int main(int argc, char *argv[]) {
