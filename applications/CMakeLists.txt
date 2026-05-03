@@ -5,7 +5,16 @@
 add_executable(example
   example.cpp
 )
+add_executable(clock
+  clock.cpp
+)
+target_include_directories(clock PRIVATE
+		${CMAKE_SOURCE_DIR}/framework
+)
 
+target_link_libraries(clock
+		framework_aufgabenblatt_2
+)
 target_include_directories(example PRIVATE
 						   ${CMAKE_SOURCE_DIR}/framework
 )
