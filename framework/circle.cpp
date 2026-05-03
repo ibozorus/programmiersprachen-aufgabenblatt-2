@@ -14,6 +14,10 @@ namespace buw {
     }
 
     void Circle::draw(Window const& window) const {
+        draw(window, 1.0);
+    }
+
+    void Circle::draw(Window const& window, double thickness) const {
         int const segments = 64;
         for (int i = 0; i < segments; ++i) {
             double angle1 = 2.0 * std::numbers::pi * i       / segments;
@@ -24,7 +28,7 @@ namespace buw {
             double x2 = center_.x + radius_ * std::cos(angle2);
             double y2 = center_.y + radius_ * std::sin(angle2);
 
-            window.draw_line(x1, y1, x2, y2, color_.r, color_.g, color_.b);
+            window.draw_line(x1, y1, x2, y2, color_.r, color_.g, color_.b, thickness);
         }
     }
 }

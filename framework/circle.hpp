@@ -15,6 +15,7 @@ namespace buw {
         Circle(Vec2 const &center, float radius, Color const &color);
         float circumference() const;
         void draw(Window const& window) const;
+        void draw(Window const& window, double thickness) const;
     };
 }
 

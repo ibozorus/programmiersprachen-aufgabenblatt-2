@@ -14,9 +14,14 @@ namespace buw {
     }
 
     void Rectangle::draw(Window const& window) const {
-        window.draw_line(min_.x, min_.y, max_.x, min_.y, color_.r, color_.g, color_.b);
-        window.draw_line(max_.x, min_.y, max_.x, max_.y, color_.r, color_.g, color_.b);
-        window.draw_line(max_.x, max_.y, min_.x, max_.y, color_.r, color_.g, color_.b);
-        window.draw_line(min_.x, max_.y, min_.x, min_.y, color_.r, color_.g, color_.b);
+        draw(window, 1.0);
+    }
+
+    void Rectangle::draw(Window const& window, double thickness) const {
+
+        window.draw_line(min_.x, min_.y, max_.x, min_.y, color_.r, color_.g, color_.b, thickness);
+        window.draw_line(max_.x, min_.y, max_.x, max_.y, color_.r, color_.g, color_.b, thickness);
+        window.draw_line(max_.x, max_.y, min_.x, max_.y, color_.r, color_.g, color_.b, thickness);
+        window.draw_line(min_.x, max_.y, min_.x, min_.y, color_.r, color_.g, color_.b, thickness);
     }
 }

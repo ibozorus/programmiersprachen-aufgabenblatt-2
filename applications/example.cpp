@@ -43,8 +43,8 @@ int main(int argc, char *argv[]) {
         win.draw_point(pos_x_1, pos_y_1, 1.0, 0.0, 0.0);
         win.draw_point(pos_x_2, pos_y_2, 0.0, 1.0, 0.0);
         win.draw_point(pos_x_3, pos_y_3, 0.0, 0.0, 1.0);
-        circle.draw(win);
-        rectangle.draw(win);
+        circle.draw(win, 0.25);
+        rectangle.draw(win, 0.8);
         auto mouse_position = win.mouse_position();
         if (left_pressed) {
             win.draw_line(30.0, 30.0, // FROM pixel idx with coords (x=30, y=30)
