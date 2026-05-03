@@ -16,6 +16,7 @@ namespace buw {
         float circumference() const;
         void draw(Window const& window) const;
         void draw(Window const& window, double thickness) const;
+        bool is_inside(Vec2 const& point) const;
     };
 }
 

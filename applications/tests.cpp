@@ -329,74 +329,75 @@ TEST_CASE("Mat2 operator* Nullmatrix ergibt Nullmatrix") {
     CHECK(result.e_01 == doctest::Approx(0.0));
     CHECK(result.e_11 == doctest::Approx(0.0));
 }
+
 // ── operator*(Mat2, Vec2) ──────────────────────────────────
 TEST_CASE("Mat2 * Vec2 mit Einheitsmatrix aendert Vektor nicht") {
-  buw::Mat2 identity{};
-  buw::Vec2 v{3.0f, 4.0f};
-  buw::Vec2 result = identity * v;
-  CHECK(result.x == doctest::Approx(3.0f));
-  CHECK(result.y == doctest::Approx(4.0f));
+    buw::Mat2 identity{};
+    buw::Vec2 v{3.0f, 4.0f};
+    buw::Vec2 result = identity * v;
+    CHECK(result.x == doctest::Approx(3.0f));
+    CHECK(result.y == doctest::Approx(4.0f));
 }
 
 TEST_CASE("Mat2 * Vec2 multipliziert korrekt") {
-  buw::Mat2 m{2.0, 0.0, 0.0, 3.0};
-  buw::Vec2 v{1.0f, 1.0f};
-  buw::Vec2 result = m * v;
-  CHECK(result.x == doctest::Approx(2.0f));
-  CHECK(result.y == doctest::Approx(3.0f));
+    buw::Mat2 m{2.0, 0.0, 0.0, 3.0};
+    buw::Vec2 v{1.0f, 1.0f};
+    buw::Vec2 result = m * v;
+    CHECK(result.x == doctest::Approx(2.0f));
+    CHECK(result.y == doctest::Approx(3.0f));
 }
 
 TEST_CASE("Mat2 * Vec2 mit Nullvektor ergibt Nullvektor") {
-  buw::Mat2 m{1.0, 2.0, 3.0, 4.0};
-  buw::Vec2 v{0.0f, 0.0f};
-  buw::Vec2 result = m * v;
-  CHECK(result.x == doctest::Approx(0.0f));
-  CHECK(result.y == doctest::Approx(0.0f));
+    buw::Mat2 m{1.0, 2.0, 3.0, 4.0};
+    buw::Vec2 v{0.0f, 0.0f};
+    buw::Vec2 result = m * v;
+    CHECK(result.x == doctest::Approx(0.0f));
+    CHECK(result.y == doctest::Approx(0.0f));
 }
 
 TEST_CASE("Mat2 * Vec2 veraendert Operanden nicht") {
-  buw::Mat2 m{2.0, 0.0, 0.0, 3.0};
-  buw::Vec2 v{1.0f, 1.0f};
-  m * v;
-  CHECK(v.x == doctest::Approx(1.0f));
-  CHECK(v.y == doctest::Approx(1.0f));
-  CHECK(m.e_00 == doctest::Approx(2.0));
-  CHECK(m.e_10 == doctest::Approx(0.0));
-  CHECK(m.e_01 == doctest::Approx(0.0));
-  CHECK(m.e_11 == doctest::Approx(3.0));
+    buw::Mat2 m{2.0, 0.0, 0.0, 3.0};
+    buw::Vec2 v{1.0f, 1.0f};
+    m * v;
+    CHECK(v.x == doctest::Approx(1.0f));
+    CHECK(v.y == doctest::Approx(1.0f));
+    CHECK(m.e_00 == doctest::Approx(2.0));
+    CHECK(m.e_10 == doctest::Approx(0.0));
+    CHECK(m.e_01 == doctest::Approx(0.0));
+    CHECK(m.e_11 == doctest::Approx(3.0));
 }
 
 // ── make_rotation_mat2 ────────────────────────────────────
 TEST_CASE("make_rotation_mat2 mit phi=0 ergibt Einheitsmatrix") {
-  buw::Mat2 m = buw::make_rotation_mat2(0.0);
-  CHECK(m.e_00 == doctest::Approx(1.0));
-  CHECK(m.e_10 == doctest::Approx(0.0));
-  CHECK(m.e_01 == doctest::Approx(0.0));
-  CHECK(m.e_11 == doctest::Approx(1.0));
+    buw::Mat2 m = buw::make_rotation_mat2(0.0);
+    CHECK(m.e_00 == doctest::Approx(1.0));
+    CHECK(m.e_10 == doctest::Approx(0.0));
+    CHECK(m.e_01 == doctest::Approx(0.0));
+    CHECK(m.e_11 == doctest::Approx(1.0));
 }
 
 TEST_CASE("make_rotation_mat2 mit phi=pi/2 rotiert 90 Grad") {
-  buw::Mat2 m = buw::make_rotation_mat2(std::numbers::pi / 2.0);
-  buw::Vec2 v{1.0f, 0.0f};
-  buw::Vec2 result = m * v;
-  CHECK(result.x == doctest::Approx(0.0f).epsilon(1e-6));
-  CHECK(result.y == doctest::Approx(1.0f));
+    buw::Mat2 m = buw::make_rotation_mat2(std::numbers::pi / 2.0);
+    buw::Vec2 v{1.0f, 0.0f};
+    buw::Vec2 result = m * v;
+    CHECK(result.x == doctest::Approx(0.0f).epsilon(1e-6));
+    CHECK(result.y == doctest::Approx(1.0f));
 }
 
 TEST_CASE("make_rotation_mat2 mit phi=pi rotiert 180 Grad") {
-  buw::Mat2 m = buw::make_rotation_mat2(std::numbers::pi);
-  buw::Vec2 v{1.0f, 0.0f};
-  buw::Vec2 result = m * v;
-  CHECK(result.x == doctest::Approx(-1.0f));
-  CHECK(result.y == doctest::Approx(0.0f).epsilon(1e-6));
+    buw::Mat2 m = buw::make_rotation_mat2(std::numbers::pi);
+    buw::Vec2 v{1.0f, 0.0f};
+    buw::Vec2 result = m * v;
+    CHECK(result.x == doctest::Approx(-1.0f));
+    CHECK(result.y == doctest::Approx(0.0f).epsilon(1e-6));
 }
 
 TEST_CASE("make_rotation_mat2 mit phi=2*pi ist wieder Einheitsmatrix") {
-  buw::Mat2 m = buw::make_rotation_mat2(2.0 * std::numbers::pi);
-  buw::Vec2 v{3.0f, 4.0f};
-  buw::Vec2 result = m * v;
-  CHECK(result.x == doctest::Approx(3.0f).epsilon(1e-5));
-  CHECK(result.y == doctest::Approx(4.0f).epsilon(1e-5));
+    buw::Mat2 m = buw::make_rotation_mat2(2.0 * std::numbers::pi);
+    buw::Vec2 v{3.0f, 4.0f};
+    buw::Vec2 result = m * v;
+    CHECK(result.x == doctest::Approx(3.0f).epsilon(1e-5));
+    CHECK(result.y == doctest::Approx(4.0f).epsilon(1e-5));
 }
 
 // ── Circle::circumference ──────────────────────────────────
@@ -418,18 +419,58 @@ TEST_CASE("Circle circumference mit radius=5") {
 // ── Rectangle::circumference ───────────────────────────────
 TEST_CASE("Rectangle circumference korrekt berechnet") {
     buw::Rectangle r{buw::Vec2{0.0f, 0.0f}, buw::Vec2{4.0f, 3.0f}, buw::Color{}};
-    CHECK(r.circumference() == doctest::Approx(14.0f));  // 2*(4+3)
+    CHECK(r.circumference() == doctest::Approx(14.0f)); // 2*(4+3)
 }
 
 TEST_CASE("Rectangle circumference Quadrat") {
     buw::Rectangle r{buw::Vec2{0.0f, 0.0f}, buw::Vec2{5.0f, 5.0f}, buw::Color{}};
-    CHECK(r.circumference() == doctest::Approx(20.0f));  // 2*(5+5)
+    CHECK(r.circumference() == doctest::Approx(20.0f)); // 2*(5+5)
 }
 
 TEST_CASE("Rectangle circumference auf const-Objekt aufrufbar") {
     buw::Rectangle const r{buw::Vec2{0.0f, 0.0f}, buw::Vec2{2.0f, 2.0f}, buw::Color{}};
-    CHECK(r.circumference() == doctest::Approx(8.0f));  // prueft ob const korrekt
+    CHECK(r.circumference() == doctest::Approx(8.0f)); // prueft ob const korrekt
 }
+
+// ── Circle::is_inside ──────────────────────────────────────
+TEST_CASE("Circle is_inside Punkt im Zentrum") {
+    buw::Circle c{buw::Vec2{400.0f, 400.0f}, 100.0f, buw::Color{}};
+    CHECK(c.is_inside(buw::Vec2{400.0f, 400.0f}));
+}
+
+TEST_CASE("Circle is_inside Punkt auf dem Rand") {
+    buw::Circle c{buw::Vec2{0.0f, 0.0f}, 100.0f, buw::Color{}};
+    CHECK(c.is_inside(buw::Vec2{100.0f, 0.0f}));
+}
+
+TEST_CASE("Circle is_inside Punkt ausserhalb") {
+    buw::Circle c{buw::Vec2{0.0f, 0.0f}, 100.0f, buw::Color{}};
+    CHECK_FALSE(c.is_inside(buw::Vec2{200.0f, 0.0f}));
+}
+
+TEST_CASE("Circle is_inside Punkt knapp ausserhalb") {
+    buw::Circle c{buw::Vec2{0.0f, 0.0f}, 100.0f, buw::Color{}};
+    CHECK_FALSE(c.is_inside(buw::Vec2{100.1f, 0.0f}));
+}
+
+// ── Rectangle::is_inside ──────────────────────────────────
+TEST_CASE("Rectangle is_inside Punkt im Inneren") {
+    buw::Rectangle r{buw::Vec2{0.0f, 0.0f}, buw::Vec2{100.0f, 100.0f}, buw::Color{}};
+    CHECK(r.is_inside(buw::Vec2{50.0f, 50.0f}));
+}
+
+TEST_CASE("Rectangle is_inside Punkt auf Ecke") {
+    buw::Rectangle r{buw::Vec2{0.0f, 0.0f}, buw::Vec2{100.0f, 100.0f}, buw::Color{}};
+    CHECK(r.is_inside(buw::Vec2{0.0f, 0.0f}));
+    CHECK(r.is_inside(buw::Vec2{100.0f, 100.0f}));
+}
+
+TEST_CASE("Rectangle is_inside Punkt ausserhalb") {
+    buw::Rectangle r{buw::Vec2{0.0f, 0.0f}, buw::Vec2{100.0f, 100.0f}, buw::Color{}};
+    CHECK_FALSE(r.is_inside(buw::Vec2{150.0f, 50.0f}));
+    CHECK_FALSE(r.is_inside(buw::Vec2{-1.0f, 50.0f}));
+}
+
 int main(int argc, char *argv[]) {
     doctest::Context ctx;
     ctx.applyCommandLine(argc, argv);

@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h> //access to GLFW key and mouse constants which we did not wrap further 
 
 #include <cmath> //access to std::sin and std::cos
+#include <vector>
 
 #include "circle.hpp"
 #include "rectangle.hpp"
@@ -20,6 +21,27 @@ int main(int argc, char *argv[]) {
         buw::Vec2{100.0f, 100.0f},
         buw::Vec2{300.0f, 250.0f},
         buw::Color{0.0f, 0.5f, 1.0f}
+    };
+    std::vector<buw::Circle> circles{
+        buw::Circle{
+            buw::Vec2{400.0f, 400.0f}, 150.0f,
+            buw::Color{1.0f, 0.5f, 0.0f}
+        },
+        buw::Circle{
+            buw::Vec2{200.0f, 200.0f}, 80.0f,
+            buw::Color{0.0f, 1.0f, 0.3f}
+        }
+    };
+
+    std::vector<buw::Rectangle> rectangles{
+        buw::Rectangle{
+            buw::Vec2{100.0f, 500.0f}, buw::Vec2{300.0f, 700.0f},
+            buw::Color{0.8f, 0.2f, 0.2f}
+        },
+        buw::Rectangle{
+            buw::Vec2{50.0f, 100.0f}, buw::Vec2{100.0f, 150.0f},
+            buw::Color{0.2f, 0.3f, 0.6f}
+        }
     };
     //this is basically a main/draw-loop
     while (!win.should_close()) {
@@ -46,6 +68,16 @@ int main(int argc, char *argv[]) {
         circle.draw(win, 0.25);
         rectangle.draw(win, 0.8);
         auto mouse_position = win.mouse_position();
+        buw::Vec2 mouse{static_cast<float>(mouse_position.first), static_cast<float>(mouse_position.second)};
+
+        for (auto const& c: circles) {
+            c.draw(win, c.is_inside(mouse) ? 2.0  : 1.0);
+        }
+
+        for (auto const& r: rectangles) {
+            r.draw(win, r.is_inside(mouse) ? 2.0  : 1.0);
+        }
+
         if (left_pressed) {
             win.draw_line(30.0, 30.0, // FROM pixel idx with coords (x=30, y=30)
                           mouse_position.first, mouse_position.second, // TO mouse position in pixel coords

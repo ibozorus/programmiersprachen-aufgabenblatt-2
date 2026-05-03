@@ -24,4 +24,9 @@ namespace buw {
         window.draw_line(max_.x, max_.y, min_.x, max_.y, color_.r, color_.g, color_.b, thickness);
         window.draw_line(min_.x, max_.y, min_.x, min_.y, color_.r, color_.g, color_.b, thickness);
     }
+
+    bool Rectangle::is_inside(Vec2 const& point) const {
+        return point.x >= min_.x && point.x <= max_.x
+            && point.y >= min_.y && point.y <= max_.y;
+    }
 }

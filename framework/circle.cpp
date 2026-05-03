@@ -31,4 +31,10 @@ namespace buw {
             window.draw_line(x1, y1, x2, y2, color_.r, color_.g, color_.b, thickness);
         }
     }
+
+    bool Circle::is_inside(Vec2 const& point) const {
+        float dx = point.x - center_.x;
+        float dy = point.y - center_.y;
+        return dx * dx + dy * dy <= radius_ * radius_;
+    }
 }
