@@ -2,6 +2,7 @@
 #define BUW_RECTANGLE_HPP
 #include "color.hpp"
 #include "vec2.hpp"
+#include "window.hpp"
 
 namespace buw {
     class Rectangle {
@@ -14,6 +15,8 @@ namespace buw {
         Rectangle(Vec2 const &min, Vec2 const &max, Color const &color);
 
         float circumference() const;
+
+        void draw(Window const& window) const;
     };
 }
 

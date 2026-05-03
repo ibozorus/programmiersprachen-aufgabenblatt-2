@@ -2,6 +2,7 @@
 #define BUW_CIRCLE_HPP
 #include "color.hpp"
 #include "vec2.hpp"
+#include "window.hpp"
 
 namespace buw {
     class Circle {
@@ -13,6 +14,7 @@ namespace buw {
     public:
         Circle(Vec2 const &center, float radius, Color const &color);
         float circumference() const;
+        void draw(Window const& window) const;
     };
 }
 
