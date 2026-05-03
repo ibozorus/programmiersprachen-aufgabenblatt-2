@@ -5,15 +5,16 @@
 
 namespace buw {
     class Rectangle {
-    public:
-        Rectangle(Vec2 const& min, Vec2 const& max, Color const& color);
-
     private:
-        Vec2  min_;   // linke obere Ecke
-        Vec2  max_;   // rechte untere Ecke
+        Vec2 min_; // linke obere Ecke
+        Vec2 max_; // rechte untere Ecke
         Color color_;
-    };
 
+    public:
+        Rectangle(Vec2 const &min, Vec2 const &max, Color const &color);
+
+        float circumference() const;
+    };
 }
 
 #endif //BUW_RECTANGLE_HPP

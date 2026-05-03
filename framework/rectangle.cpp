@@ -6,4 +6,10 @@ namespace buw {
           , max_{max}
           , color_{color} {
     }
+
+    float Rectangle::circumference() const {
+        float width  = max_.x - min_.x;
+        float height = max_.y - min_.y;
+        return 2.0f * (width + height);
+    }
 }

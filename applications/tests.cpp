@@ -1,7 +1,9 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #include <doctest.h>
 
+#include "circle.hpp"
 #include "mat2.hpp"
+#include "rectangle.hpp"
 #include "vec2.hpp"
 
 int factorial(int n) {
@@ -395,6 +397,38 @@ TEST_CASE("make_rotation_mat2 mit phi=2*pi ist wieder Einheitsmatrix") {
   buw::Vec2 result = m * v;
   CHECK(result.x == doctest::Approx(3.0f).epsilon(1e-5));
   CHECK(result.y == doctest::Approx(4.0f).epsilon(1e-5));
+}
+
+// ── Circle::circumference ──────────────────────────────────
+TEST_CASE("Circle circumference mit radius=1") {
+    buw::Circle c{buw::Vec2{0.0f, 0.0f}, 1.0f, buw::Color{}};
+    CHECK(c.circumference() == doctest::Approx(2.0f * std::numbers::pi));
+}
+
+TEST_CASE("Circle circumference mit radius=0 ist 0") {
+    buw::Circle c{buw::Vec2{0.0f, 0.0f}, 0.0f, buw::Color{}};
+    CHECK(c.circumference() == doctest::Approx(0.0f));
+}
+
+TEST_CASE("Circle circumference mit radius=5") {
+    buw::Circle c{buw::Vec2{1.0f, 2.0f}, 5.0f, buw::Color{}};
+    CHECK(c.circumference() == doctest::Approx(2.0f * 5.0f * std::numbers::pi));
+}
+
+// ── Rectangle::circumference ───────────────────────────────
+TEST_CASE("Rectangle circumference korrekt berechnet") {
+    buw::Rectangle r{buw::Vec2{0.0f, 0.0f}, buw::Vec2{4.0f, 3.0f}, buw::Color{}};
+    CHECK(r.circumference() == doctest::Approx(14.0f));  // 2*(4+3)
+}
+
+TEST_CASE("Rectangle circumference Quadrat") {
+    buw::Rectangle r{buw::Vec2{0.0f, 0.0f}, buw::Vec2{5.0f, 5.0f}, buw::Color{}};
+    CHECK(r.circumference() == doctest::Approx(20.0f));  // 2*(5+5)
+}
+
+TEST_CASE("Rectangle circumference auf const-Objekt aufrufbar") {
+    buw::Rectangle const r{buw::Vec2{0.0f, 0.0f}, buw::Vec2{2.0f, 2.0f}, buw::Color{}};
+    CHECK(r.circumference() == doctest::Approx(8.0f));  // prueft ob const korrekt
 }
 int main(int argc, char *argv[]) {
     doctest::Context ctx;

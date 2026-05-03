@@ -12,6 +12,7 @@ namespace buw {
 
     public:
         Circle(Vec2 const &center, float radius, Color const &color);
+        float circumference() const;
     };
 }
 
